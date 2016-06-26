@@ -27,4 +27,19 @@ func check_area_contains(x1,y1,x2,y2,tiletype):
 			checked_cell=map.get_cell(x1+xloop,y1+yloop)
 			if checked_cell in tiletype:
 				return true
-		
+
+func check_area_contains_amount(x1,y1,x2,y2,tiletype):
+	"""Check how much of something an area contains"""
+	var width= x2-x1
+	var height= y2-y1
+	var map = get_node("/root/main/world_map")
+	var checked_cell
+	var amount=0
+	for xloop in range(width):
+		for yloop in range(height):
+			checked_cell=map.get_cell(x1+xloop,y1+yloop)
+			if checked_cell in tiletype:
+				amount+=1
+	print(str(amount))
+	print("am I called?")
+	return amount
