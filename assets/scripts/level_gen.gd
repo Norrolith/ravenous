@@ -7,9 +7,16 @@ var gen_height=100
 var cells_cleared=0
 
 func _ready():
-	randomize()
+	my_build_level()
 
+func my_build_level():
+	#variables that need to be reset
+	cells_cleared=0
+	wx=50
+	wy=50
+	randomize()
 	self.clear()
+	
 
 	#Now the map has been cleared and filled, randomize starting point
 
@@ -25,6 +32,7 @@ func _ready():
 	
 func my_clear_cell(inx,iny):
 	if((self.get_cell(inx,iny)==-1)):
+		#var new_tile=tile_info.choose_tile(tile_info.ter_dirt)
 		var new_tile=tile_info.choose_tile(tile_info.ter_dirt)
 		self.set_cell(inx,iny,new_tile,false,false,false)
 		cells_cleared+=1
@@ -62,12 +70,12 @@ func my_update_drunk():
 		wy=gen_height-2
 	#now we have set and fixed tempy and tempx
 	
-
-
 func my_build_walls():
 	for xloop in range(gen_width):
 		for yloop in range(gen_height):
-			if tile_info.check_area_contains(xloop-1,yloop-1,xloop+1,yloop+1,tile_info.ter_dirt):
-				print("place wall")
-				var new_tile=tile_info.choose_tile(tile_info.ter_wall)
-				self.set_cell(xloop,yloop,new_tile,false,false,false)
+			if (self.get_cell(xloop,yloop)==-1):
+				if tile_info.check_area_contains(xloop-1,yloop-1,xloop+2,yloop+2,tile_info.ter_dirt):
+					#var new_tile=tile_info.choose_tile(tile_info.ter_wall)
+					var new_tile=tile_info.choose_tile(tile_info.ter_wall)
+					self.set_cell(xloop,yloop,new_tile,false,false,false)
+	
