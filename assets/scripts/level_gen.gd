@@ -7,6 +7,7 @@ var gen_height=100
 var cells_cleared=0
 
 func _ready():
+	tile_info.map=self
 	my_build_level()
 
 func my_build_level():
@@ -27,7 +28,8 @@ func my_build_level():
 		my_update_drunk()
 		my_clear_cell(wx,wy)
 	print(str(cells_cleared))
-	my_smooth_floors()
+	call_deferred("my_smooth_floors")
+
 	my_build_walls()
 	
 	
@@ -81,10 +83,15 @@ func my_build_walls():
 					self.set_cell(xloop,yloop,new_tile,false,false,false)
 	
 func my_smooth_floors():
+	var duplicate=self.duplicate(0)
+	get_node("/root/main").add_child(duplicate)
 	for xloop in range(gen_width):
 		for yloop in range(gen_height):
 			var amount=tile_info.check_area_contains_amount(xloop-1,yloop-1,xloop+1,yloop+1,[-1])
-			print(str(amount))
 			if(amount>=3):
-				self.set_cell(xloop,yloop,10)
-			
+				#self.set_cell(xloop,yloop,tile_info.choose_tile(tile_info.ter_dirt))
+				duplicate.set_cell(xloop,yloop,11)
+	self.set_name("deleted")
+	duplicate.set_name("world_map")
+	self.queue_free()
+
