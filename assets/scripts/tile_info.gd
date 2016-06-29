@@ -129,7 +129,7 @@ func find_area(startpos,amount,passable):
 		if connected.size()>=amount:
 			done = true
 			print("Found an area " +str(amount)+" units big.")
-		if amount==0:
-			if active.size()==0:
-				done=true
+		#If there are no points in active, the algorithm is done.
+		if active.size()==0:
+			done=true
 	return connected

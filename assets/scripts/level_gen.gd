@@ -25,6 +25,7 @@ func my_build_level():
 	while(cells_cleared<(gen_height*gen_width*0.5)):
 		my_update_drunk()
 		my_clear_cell(wx,wy)
+		
 	print(str(cells_cleared)+" floors placed")
 	my_build_walls()
 	print("Walls built")
@@ -33,6 +34,7 @@ func my_build_level():
 		my_place_pool((randi()%300)+25)
 	print("Placed "+str(gen_pools_amount)+ " pools of slime.")
 	my_edge_pools()
+	print("Done.\n\n")
 
 
 	
