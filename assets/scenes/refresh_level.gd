@@ -12,7 +12,6 @@ func _ready():
 	
 func _process(delta):
 	if(Input.is_action_pressed("ui_accept")):
-		print("Void right now")
-		#tile_info.map.my_build_level()
+		tile_info.map.my_build_level()
 
 
