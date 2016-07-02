@@ -137,3 +137,9 @@ func find_area(startpos,amount,passable):
 		if active.size()==0:
 			done=true
 	return connected
+	
+func copy_tilemap(node_in,node_out):
+	for xloop in range(node_in.gen_width):
+		for yloop in range(node_in.gen_height):
+			var tile = node_in.get_cell(xloop,yloop)
+			node_out.set_cell(xloop,yloop,tile,false,false,false)

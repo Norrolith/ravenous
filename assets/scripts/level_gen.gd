@@ -27,14 +27,17 @@ func my_build_level():
 		my_clear_cell(wx,wy)
 		
 	print(str(cells_cleared)+" floors placed")
+	my_smooth_floors(2)
+	print("Smoothed floors")
 	my_build_walls()
 	print("Walls built")
-
+	
 	for pool in range(gen_pools_amount):
 		my_place_pool((randi()%300)+25)
 	print("Placed "+str(gen_pools_amount)+ " pools of slime.")
 	my_edge_pools()
 	print("Done.\n\n")
+
 
 
 	
@@ -112,5 +115,29 @@ func my_edge_pools():
 		var above_tile=self.get_cellv(Vector2(pool.x,pool.y-1))
 		if above_tile in tile_info.ter_dirt:
 			self.set_cellv(pool,12)
-			
-	
+
+func my_smooth_floors(iterations):
+	if (iterations==0):
+		pass
+	for iteration in range(iterations):
+		var copy=get_node("/root/main/copy_map")
+		for xloop in range(gen_width):
+			for yloop in range(gen_height):
+				var amount= tile_info.check_area_contains_amount(xloop-1,yloop-1,xloop+2,yloop+2,[-1])
+				if (amount<=5):
+					copy.set_cell(xloop,yloop,tile_info.choose_tile(tile_info.ter_dirt),false,false,false)
+				else:
+					copy.set_cell(xloop,yloop,-1,false,false,false)
+			"""
+			var array= tile_info.get_neighbors_in(Vector2(xloop,yloop),[-1])
+			if array.size()==2:
+				copy.set_cell(xloop-1,yloop-1,tile_info.choose_tile(tile_info.ter_ooze),false,false,false)
+			else:
+				copy.set_cell(xloop-1,yloop-1,-1,false,false,false)
+			"""
+		for xloop in range(gen_width):
+			for yloop in range(gen_height):
+				var tile= copy.get_cell(xloop,yloop)
+				self.set_cell(xloop,yloop,tile,false,false,false)
+		copy.clear()
+			#tile_info.copy_tilemap(copy,tile_info.map)

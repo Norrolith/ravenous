@@ -8,10 +8,10 @@ func _ready():
 	self.make_current()
 	pass
 func _process(delta):
+	var pos=get_node("/root/main").get_global_mouse_pos()
 	if(Input.is_mouse_button_pressed(BUTTON_LEFT) and !jumped):
-		set_pos(get_viewport().get_mouse_pos())
+		set_pos(pos)
 		jumped=true
-		Input.warp_mouse_pos(get_pos())
 	else:
 		if(!Input.is_mouse_button_pressed(BUTTON_LEFT) and jumped):
 			jumped=false
